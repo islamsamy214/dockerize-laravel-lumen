@@ -62,6 +62,9 @@ COPY . .
 RUN chmod 777 -R /var/www/html/storage /var/www/html/public
 RUN chmod +x /usr/local/bin/start-container.sh
 
+# If you are connecting to postgres db on some remote RDS server you will need this
+# ENV PGSSLCERT /tmp/postgresql.crt
+
 EXPOSE 8000
 
 ENTRYPOINT ["start-container.sh"]
