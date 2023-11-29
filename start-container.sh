@@ -9,7 +9,10 @@ if [ ! -d /.composer ]; then
 fi
 
 chmod -R ugo+rw /.composer
-composer install --ignore-platform-reqs --no-interaction --no-progress --no-suggest --working-dir=/var/www/html
+composer install --ignore-platform-reqs --no-interaction --no-progress --working-dir=/var/www/html
+php artisan key:generate
+php artisan cache:clear
+php artisan migrate --force
 
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"
