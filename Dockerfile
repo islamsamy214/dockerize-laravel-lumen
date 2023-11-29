@@ -44,6 +44,7 @@ RUN apt-get update \
     && apt install -y php8.2-common 
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
+RUN update-alternatives --set php /usr/bin/php8.2
 
 # Set permissions for the web user and group
 RUN groupadd --force -g $WWWGROUP sail
