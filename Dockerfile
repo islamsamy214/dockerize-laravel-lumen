@@ -1,8 +1,8 @@
 FROM ubuntu:22.04
 
-LABEL maintainer="Taylor Otwell"
+LABEL maintainer="Islam Samy"
 
-ARG WWWGROUP
+ARG WWWGROUP=1000
 ARG NODE_VERSION=18
 ARG POSTGRES_VERSION=15
 
@@ -34,12 +34,14 @@ RUN apt-get update \
     && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/keyrings/pgdg.gpg >/dev/null \
     && echo "deb [signed-by=/etc/apt/keyrings/pgdg.gpg] http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
     && apt-get update \
+    && apt install -y librdkafka-dev \
+    && pecl install rdkafka \
+    && echo "extension=rdkafka.so" > /etc/php/8.2/cli/conf.d/20-rdkafka.ini \
     && apt-get install -y mysql-client \
     && apt-get install -y postgresql-client-$POSTGRES_VERSION \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && apt install -y php8.2-imagick \
     && apt install -y php8.2-json \
     && apt install -y php8.2-common 
 
@@ -61,10 +63,10 @@ USER root
 COPY . .
 
 RUN chmod 777 -R /var/www/html/storage /var/www/html/public
+RUN chown -R sail /var/www/html/storage /var/www/html/public
 RUN chmod +x /usr/local/bin/start-container.sh
 
-# If you are connecting to postgres db on some remote RDS server you will need this
-# ENV PGSSLCERT /tmp/postgresql.crt
+ENV PGSSLCERT /tmp/postgresql.crt
 
 EXPOSE 8000
 
