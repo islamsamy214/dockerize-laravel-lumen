@@ -38,12 +38,11 @@ RUN apt-get update \
     && pecl install rdkafka \
     && echo "extension=rdkafka.so" > /etc/php/8.2/cli/conf.d/20-rdkafka.ini \
     && apt-get install -y mysql-client \
+    && apt install -y php8.2-common \
     && apt-get install -y postgresql-client-$POSTGRES_VERSION \
     && apt-get -y autoremove \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && apt install -y php8.2-json \
-    && apt install -y php8.2-common 
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
 RUN update-alternatives --set php /usr/bin/php8.2
