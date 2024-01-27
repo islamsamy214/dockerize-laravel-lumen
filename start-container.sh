@@ -15,6 +15,9 @@ php artisan cache:clear
 php artisan optimize
 php artisan migrate --force
 
+chown -R sail:sail /var/www/html
+chmod -R 755 /var/www/html/storage /var/www/html/public
+
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"
 else
