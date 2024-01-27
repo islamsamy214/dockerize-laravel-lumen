@@ -58,20 +58,15 @@ RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
 
 RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 -G sudo sail
-RUN chown -R sail:sail /var/www/html
 
 COPY start-container.sh /usr/local/bin/start-container.sh
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
-COPY composer.json composer.lock ./
-
-# Switch back to root user
-USER root
 COPY . .
 
-RUN chmod 777 -R /var/www/html/storage /var/www/html/public
 RUN chown -R sail /var/www/html/storage /var/www/html/public
 RUN chmod +x /usr/local/bin/start-container.sh
+RUN chown -R sail:sail /var/www/html
 
 ENV PGSSLCERT /tmp/postgresql.crt
 
