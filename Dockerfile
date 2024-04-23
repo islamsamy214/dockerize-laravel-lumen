@@ -28,7 +28,6 @@ RUN apt-get update \
        php8.2-msgpack php8.2-igbinary php8.2-redis php8.2-swoole \
        php8.2-memcached php8.2-pcov php8.2-xdebug \
        php8.2-common php8.2-oauth php8.2-uuid \
-       php8.2-mongodb \
     && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" > /etc/apt/sources.list.d/nodesource.list \
@@ -45,6 +44,8 @@ RUN apt-get update \
     && apt install -y librdkafka-dev \
     && pecl install rdkafka \
     && echo "extension=rdkafka.so" > /etc/php/8.2/cli/conf.d/20-rdkafka.ini \
+    && yes '' | pecl install mongodb \
+    && echo "extension=mongodb.so" > /etc/php/8.2/cli/conf.d/20-mongodb.ini \
     && apt-get install -y yarn \
     && apt-get install -y mysql-client \
     && apt-get install -y postgresql-client-$POSTGRES_VERSION \
