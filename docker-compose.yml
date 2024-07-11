@@ -138,6 +138,7 @@ services:
 
 networks:
     laravel_app_net:
+        name: laravel_app_net
         driver: bridge
 volumes:
     laravel_app_pgsql:
