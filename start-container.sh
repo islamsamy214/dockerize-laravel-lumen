@@ -14,6 +14,7 @@ php artisan key:generate
 php artisan cache:clear
 php artisan optimize
 php artisan migrate --force
+# php artisan scout:sync
 
 chown -R sail:sail /var/www/html
 chmod -R 755 /var/www/html/storage /var/www/html/public
