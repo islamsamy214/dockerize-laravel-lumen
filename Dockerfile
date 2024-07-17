@@ -49,6 +49,8 @@ RUN apt-get update \
     # && echo "extension=mongodb.so" > /etc/php/8.2/cli/conf.d/20-mongodb.ini \
     # && apt-get install -y yarn \
     # && apt-get install -y mysql-client \
+    && pecl install channel://pecl.php.net/uv-0.3.0 \
+    && echo "extension=uv.so" > /etc/php/8.2/cli/conf.d/20-uv.ini \
     && apt-get install -y postgresql-client-$POSTGRES_VERSION \
     && apt-get -y autoremove \
     && apt-get clean \
