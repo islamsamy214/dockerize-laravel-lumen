@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ ! -z "$WWWUSER" ]; then
-    usermod -u $WWWUSER sail
+    usermod -u $WWWUSER app
 fi
 
 if [ ! -d /.composer ]; then
@@ -16,7 +16,7 @@ php artisan optimize
 php artisan migrate --force
 # php artisan scout:sync
 
-chown -R sail:sail /var/www/html
+chown -R app:app /var/www/html
 chmod -R 755 /var/www/html/storage /var/www/html/public
 
 if [ $# -gt 0 ]; then
