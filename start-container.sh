@@ -11,8 +11,11 @@ fi
 chmod -R ugo+rw /.composer
 composer install --ignore-platform-reqs --no-interaction --no-progress --working-dir=/var/www/html
 php artisan key:generate
-php artisan cache:clear
 php artisan optimize
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
+php artisan route:clear
 php artisan migrate --force
 # php artisan scout:sync
 
