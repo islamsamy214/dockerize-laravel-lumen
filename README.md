@@ -2,7 +2,7 @@
 dockerize php laravel or lumen projects with the common extensions
 
 # Introduction
-this an edited clone of PHP8.2 version from Laravel Sail
+this an edited clone of sail but with PHP8.3 version
 
 # How to use
 - Add the provided files to your project.
