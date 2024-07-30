@@ -1,4 +1,4 @@
-version: '3'
+# version: '3'
 services:
     laravel_app:
         container_name: 'laravel_app'
@@ -32,7 +32,7 @@ services:
         depends_on:
             - laravel_app_pgsql
             - laravel_app_redis
-            - laravel_app_meilisearch
+            # - laravel_app_meilisearch
 
     laravel_app_pgsql:
         container_name: laravel_app_pgsql
