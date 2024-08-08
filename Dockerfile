@@ -39,7 +39,7 @@ RUN apt-get update \
 
 # Install PHP and PHP extensions
 RUN apt-get update \
-    && apt-get install -y php8.3-cli php8.3 \
+    && apt-get install -y php8.3-cli php8.3 php8.3-dev \
     php8.3-curl php8.3-imap php8.3-gd php8.3-imagick \
     php8.3-mbstring php8.3-zip php8.3-bcmath \
     php8.3-intl php8.3-readline php8.3-ldap \
