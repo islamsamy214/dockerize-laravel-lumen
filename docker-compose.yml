@@ -29,66 +29,66 @@ services:
             - '.:/var/www/html'
         networks:
             - laravel_app_net
-        depends_on:
-            - laravel_app_pgsql
-            - laravel_app_redis
-            # - laravel_app_meilisearch
+        # depends_on:
+        #     - laravel_app_pgsql
+        #     - laravel_app_redis
+        #     - laravel_app_meilisearch
 
-    laravel_app_pgsql:
-        container_name: laravel_app_pgsql
-        image: 'postgres:15'
-        # deploy:
-        #     resources:
-        #         limits:
-        #             cpus: '0.1'
-        #             memory: '128M'
-        restart: unless-stopped
-        ports:
-            - '${FORWARD_DB_PORT:-5432}:5432'
-        environment:
-            PGPASSWORD: '${DB_PASSWORD:-secret}'
-            POSTGRES_DB: '${DB_DATABASE}'
-            POSTGRES_USER: '${DB_USERNAME}'
-            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-        volumes:
-            - 'laravel_app_pgsql:/var/lib/postgresql/data'
-            - './vendor/laravel/app/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
-        networks:
-            - laravel_app_net
-        healthcheck:
-            test:
-                - CMD
-                - pg_isready
-                - '-q'
-                - '-d'
-                - '${DB_DATABASE}'
-                - '-U'
-                - '${DB_USERNAME}'
-            retries: 3
-            timeout: 5s
+    # laravel_app_pgsql:
+    #     container_name: laravel_app_pgsql
+    #     image: 'postgres:15'
+    #     # deploy:
+    #     #     resources:
+    #     #         limits:
+    #     #             cpus: '0.1'
+    #     #             memory: '128M'
+    #     restart: unless-stopped
+    #     ports:
+    #         - '${FORWARD_DB_PORT:-5432}:5432'
+    #     environment:
+    #         PGPASSWORD: '${DB_PASSWORD:-secret}'
+    #         POSTGRES_DB: '${DB_DATABASE}'
+    #         POSTGRES_USER: '${DB_USERNAME}'
+    #         POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+    #     volumes:
+    #         - 'laravel_app_pgsql:/var/lib/postgresql/data'
+    #         - './vendor/laravel/app/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
+    #     networks:
+    #         - laravel_app_net
+    #     healthcheck:
+    #         test:
+    #             - CMD
+    #             - pg_isready
+    #             - '-q'
+    #             - '-d'
+    #             - '${DB_DATABASE}'
+    #             - '-U'
+    #             - '${DB_USERNAME}'
+    #         retries: 3
+    #         timeout: 5s
 
-    laravel_app_redis:
-        container_name: laravel_app_redis
-        image: 'redis:alpine'
-        # deploy:
-        #     resources:
-        #         limits:
-        #             cpus: '0.1'
-        #             memory: '128M'
-        restart: unless-stopped
-        ports:
-            - '${FORWARD_REDIS_PORT:-6379}:6379'
-        volumes:
-            - 'laravel_app_redis:/data'
-        networks:
-            - laravel_app_net
-        healthcheck:
-            test:
-                - CMD
-                - redis-cli
-                - ping
-            retries: 3
-            timeout: 5s
+    # laravel_app_redis:
+    #     container_name: laravel_app_redis
+    #     image: 'redis:alpine'
+    #     # deploy:
+    #     #     resources:
+    #     #         limits:
+    #     #             cpus: '0.1'
+    #     #             memory: '128M'
+    #     restart: unless-stopped
+    #     ports:
+    #         - '${FORWARD_REDIS_PORT:-6379}:6379'
+    #     volumes:
+    #         - 'laravel_app_redis:/data'
+    #     networks:
+    #         - laravel_app_net
+    #     healthcheck:
+    #         test:
+    #             - CMD
+    #             - redis-cli
+    #             - ping
+    #         retries: 3
+    #         timeout: 5s
 
     # laravel_app_meilisearch:
     #     container_name: laravel_app_meilisearch
@@ -142,9 +142,9 @@ networks:
         name: laravel_app_net
         driver: bridge
 volumes:
-    laravel_app_pgsql:
-        driver: local
-    laravel_app_redis:
-        driver: local
+    # laravel_app_pgsql:
+    #     driver: local
+    # laravel_app_redis:
+    #     driver: local
     # laravel_app_meilisearch:
     #     driver: local
