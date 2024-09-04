@@ -141,7 +141,7 @@ networks:
     laravel_app_net:
         name: laravel_app_net
         driver: bridge
-volumes:
+# volumes:
     # laravel_app_pgsql:
     #     driver: local
     # laravel_app_redis:
