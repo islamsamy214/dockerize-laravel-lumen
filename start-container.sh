@@ -10,14 +10,14 @@ fi
 
 chmod -R ugo+rw /.composer
 composer install --ignore-platform-reqs --no-interaction --no-progress --working-dir=/var/www/html
-php artisan key:generate
-php artisan optimize
-php artisan cache:clear
-php artisan config:clear
-php artisan view:clear
-php artisan route:clear
-php artisan migrate --force
-# php artisan scout:sync
+php /var/www/html/artisan key:generate
+php /var/www/html/artisan optimize
+php /var/www/html/artisan cache:clear
+php /var/www/html/artisan config:clear
+php /var/www/html/artisan view:clear
+php /var/www/html/artisan route:clear
+php /var/www/html/artisan migrate --force
+# php /var/www/html/artisan scout:sync
 
 chown -R app:app /var/www/html
 chmod -R 755 /var/www/html/storage /var/www/html/public
