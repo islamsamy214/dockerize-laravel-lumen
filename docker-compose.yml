@@ -1,13 +1,11 @@
-# version: '3'
 services:
     laravel_app:
-        container_name: 'laravel_app'
         build:
             context: .
             dockerfile: Dockerfile
             args:
                 WWWGROUP: 1000
-        image: laravel_app
+        image: 'app-8.3/app'
         # deploy:
         #     resources:
         #         limits:
@@ -16,33 +14,29 @@ services:
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '8000:80'
-            - '5173:5173'
-            # - '8080:8080'
+            - '${APP_PORT:-8000}:80'
+            # - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: 1000
             LARAVEL_APP: 1
             XDEBUG_MODE: '${APP_XDEBUG_MODE:-off}'
             XDEBUG_CONFIG: '${APP_XDEBUG_CONFIG:-client_host=host.docker.internal}'
-        restart: unless-stopped
+            IGNITION_LOCAL_SITES_PATH: '${PWD}'
         volumes:
             - '.:/var/www/html'
         networks:
             - laravel_app_net
         # depends_on:
-        #     - laravel_app_pgsql
-        #     - laravel_app_redis
-        #     - laravel_app_meilisearch
-
-    # laravel_app_pgsql:
-    #     container_name: laravel_app_pgsql
-    #     image: 'postgres:15'
+        #     - pgsql
+        #     - redis
+        #     - meilisearch
+    # pgsql:
+    #     image: 'postgres:17'
     #     # deploy:
     #     #     resources:
     #     #         limits:
-    #     #             cpus: '0.1'
-    #     #             memory: '128M'
-    #     restart: unless-stopped
+    #     #             cpus: "1"
+    #     #             memory: 2048M
     #     ports:
     #         - '${FORWARD_DB_PORT:-5432}:5432'
     #     environment:
@@ -51,7 +45,7 @@ services:
     #         POSTGRES_USER: '${DB_USERNAME}'
     #         POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
     #     volumes:
-    #         - 'laravel_app_pgsql:/var/lib/postgresql/data'
+    #         - 'app-pgsql:/var/lib/postgresql/data'
     #         - './vendor/laravel/app/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
     #     networks:
     #         - laravel_app_net
@@ -66,20 +60,17 @@ services:
     #             - '${DB_USERNAME}'
     #         retries: 3
     #         timeout: 5s
-
-    # laravel_app_redis:
-    #     container_name: laravel_app_redis
+    # redis:
     #     image: 'redis:alpine'
     #     # deploy:
     #     #     resources:
     #     #         limits:
-    #     #             cpus: '0.1'
-    #     #             memory: '128M'
-    #     restart: unless-stopped
+    #     #             cpus: "1"
+    #     #             memory: 2048M
     #     ports:
     #         - '${FORWARD_REDIS_PORT:-6379}:6379'
     #     volumes:
-    #         - 'laravel_app_redis:/data'
+    #         - 'app-redis:/data'
     #     networks:
     #         - laravel_app_net
     #     healthcheck:
@@ -89,24 +80,19 @@ services:
     #             - ping
     #         retries: 3
     #         timeout: 5s
-
-    # laravel_app_meilisearch:
-    #     container_name: laravel_app_meilisearch
-    #     image: getmeili/meilisearch:v1.9.0
+    # meilisearch:
+    #     image: 'getmeili/meilisearch:latest'
     #     # deploy:
     #     #     resources:
     #     #         limits:
-    #     #             cpus: '0.1'
-    #     #             memory: '128M'
-    #     restart: unless-stopped
+    #     #             cpus: "1"
+    #     #             memory: 2048M
     #     ports:
     #         - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
     #     environment:
-    #         MEILI_ENV: '${MEILISEARCH_ENV:-production}'
     #         MEILI_NO_ANALYTICS: '${MEILISEARCH_NO_ANALYTICS:-false}'
-    #         MEILI_MASTER_KEY: "X9vZVNkL1do9dTXPi4RovD-OWbHNXYAw-m-SZD__luU"
     #     volumes:
-    #         - 'laravel_app_meilisearch:/meili_data'
+    #         - 'app-meilisearch:/meili_data'
     #     networks:
     #         - laravel_app_net
     #     healthcheck:
@@ -119,8 +105,8 @@ services:
     #         retries: 3
     #         timeout: 5s
 
-    # laravel_app_meilisearch_ui:
-    #     container_name: laravel_app_meilisearch_ui
+    # meilisearch_ui:
+    #     container_name: meilisearch_ui
     #     image: riccoxie/meilisearch-ui:latest
     #     # deploy:
     #     #     resources:
@@ -131,20 +117,18 @@ services:
     #     ports:
     #         - "8080:24900"
     #     environment:
-    #         MEILISEARCH_URL: "http://laravel_app_meilisearch:7700"
+    #         MEILISEARCH_URL: "http://meilisearch:7700"
     #     networks:
     #         - laravel_app_net
     #     depends_on:
-    #         - laravel_app_meilisearch
-
+    #         - meilisearch
 networks:
     laravel_app_net:
-        name: laravel_app_net
         driver: bridge
-# volumes:
-    # laravel_app_pgsql:
-    #     driver: local
-    # laravel_app_redis:
-    #     driver: local
-    # laravel_app_meilisearch:
-    #     driver: local
+volumes:
+    app-pgsql:
+        driver: local
+    app-redis:
+        driver: local
+    app-meilisearch:
+        driver: local
