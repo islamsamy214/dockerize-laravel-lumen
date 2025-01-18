@@ -27,7 +27,9 @@ For better performance, use Octane with Swoole. Uncomment and configure the Octa
 
 Use Octane with Swoole for improved performance:
 
+```dockerfile
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=swoole --host=0.0.0.0 --port=80"
+```
 
 3. Set Up Nginx as a Reverse Proxy
 
@@ -42,9 +44,11 @@ Steps to Implement
 
 Run the following commands:
 
+```bash
 composer require laravel/octane  
 php artisan octane:install  
 php artisan vendor:publish --tag=octane-config
+```
 
 2. Update Your Dockerfile
 
@@ -63,8 +67,9 @@ Use Nginx to forward traffic to Octane.
 
 Build and start your Docker containers:
 
+```bash
 docker-compose up --build
-
+```
 
 ---
 
