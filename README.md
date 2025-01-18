@@ -20,7 +20,7 @@ The `artisan serve` command is not designed for production environments and is b
 **Comment out the default PHP command that uses `artisan serve`:**  
 ```dockerfile
 # ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
-
+```
 2. Enable Octane with Swoole
 
 For better performance, use Octane with Swoole. Uncomment and configure the Octane-related command in your Dockerfile:
@@ -50,8 +50,10 @@ php artisan vendor:publish --tag=octane-config
 
 Configure Octane as the default PHP server:
 
+```dockerfile
 # Set Octane as the default PHP command
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=swoole --host=0.0.0.0 --port=80"
+```
 
 3. Configure Nginx
 
