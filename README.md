@@ -1,57 +1,64 @@
-# laravel-lumen-in-docker
-dockerize php laravel or lumen projects with the common extensions
+# Laravel Lumen in Docker  
 
-# Introduction
-this an edited clone of sail but with PHP8.3 version
+**Dockerize PHP Laravel or Lumen projects with the common extensions**  
 
-# How to use
-- Add the provided files to your project.
-- Review the Dockerfile and remove any unneeded steps to minimize the image.
-- Run ``docker compose up`` or ``sudo docker compose up``.
+## Introduction  
+This is an edited clone of Sail but with PHP 8.3 version.  
 
-To Optimal Configuration:
+## How to Use  
+1. Add the provided files to your project.  
+2. Review the `Dockerfile` and remove any unneeded steps to minimize the image.  
+3. Run `docker compose up` or `sudo docker compose up`.  
 
-1. Avoid Using artisan serve:
-The artisan serve command is not designed for production environments and is better suited for development. To discourage its use, make the following adjustment:
+---
 
-# Comment out the default PHP command that uses artisan serve
+## Optimal Configuration  
+
+### 1. Avoid Using `artisan serve`  
+The `artisan serve` command is not designed for production environments and is better suited for development. To discourage its use, make the following adjustment:  
+
+**Comment out the default PHP command that uses `artisan serve`:**  
+```dockerfile
 # ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
 
+2. Enable Octane with Swoole
 
-2. Enable Octane with Swoole:
-Install Laravel Octane and configure it to use the Swoole server. Uncomment the Octane-related command in your Dockerfile:
+For better performance, use Octane with Swoole. Uncomment and configure the Octane-related command in your Dockerfile:
 
-# Use Octane with Swoole for improved performance
+Use Octane with Swoole for improved performance:
+
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=swoole --host=0.0.0.0 --port=80"
 
+3. Set Up Nginx as a Reverse Proxy
 
-3. Set Up Nginx as a Reverse Proxy:
-Nginx will act as the proxy server, handling all incoming requests and forwarding them to Octane. This setup ensures you get the maximum performance from Octane with Swoole.
+Nginx will act as the proxy server, handling all incoming requests and forwarding them to Octane. This setup ensures you get maximum performance from Octane with Swoole.
 
 
 ---
 
 Steps to Implement
 
-1. Install Octane in Your Lumen Application:
+1. Install Octane in Your Lumen Application
 
-composer require laravel/octane
-php artisan octane:install
+Run the following commands:
+
+composer require laravel/octane  
+php artisan octane:install  
 php artisan vendor:publish --tag=octane-config
 
+2. Update Your Dockerfile
 
-2. Update Your Dockerfile:
-
-Configure Octane as the default PHP server 
+Configure Octane as the default PHP server:
 
 # Set Octane as the default PHP command
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=swoole --host=0.0.0.0 --port=80"
 
+3. Configure Nginx
 
-3. Configure Nginx:
 Use Nginx to forward traffic to Octane.
 
-4. Deploy the Setup:
+4. Deploy the Setup
+
 Build and start your Docker containers:
 
 docker-compose up --build
@@ -61,5 +68,10 @@ docker-compose up --build
 
 By following this approach, your Laravel Lumen application will leverage the performance benefits of Octane with Swoole, while Nginx acts as the reverse proxy to handle incoming traffic efficiently.
 
-# Buy me a coffee:
+
+---
+
+Buy Me a Coffee
+
 https://www.buymeacoffee.com/islamsamy
+
