@@ -17,11 +17,13 @@ chmod -R ugo+rw /.composer
 
 composer install --ignore-platform-reqs --no-interaction --no-progress --working-dir=/var/www/html
 php /var/www/html/artisan key:generate
-php /var/www/html/artisan optimize
 php /var/www/html/artisan cache:clear
 php /var/www/html/artisan config:clear
 php /var/www/html/artisan view:clear
 php /var/www/html/artisan route:clear
+php /var/www/html/artisan schedule:clear-cache
+php /var/www/html/artisan optimize:clear
+php /var/www/html/artisan optimize
 php /var/www/html/artisan migrate --force
 # php /var/www/html/artisan scout:sync
 
