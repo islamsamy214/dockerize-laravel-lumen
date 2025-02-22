@@ -54,11 +54,7 @@ Configure Octane as the default PHP server:
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=swoole --host=0.0.0.0 --port=80"
 ```
 
-3. Configure Nginx
-
-Use Nginx to forward traffic to Octane.
-
-4. Deploy the Setup
+3. Deploy the Setup
 
 Build and start your Docker containers:
 
@@ -66,12 +62,7 @@ Build and start your Docker containers:
 docker-compose up --build
 ```
 
----
-
-By following this approach, your Laravel Lumen application will leverage the performance benefits of Octane with Swoole, while Nginx acts as the reverse proxy to handle incoming traffic efficiently.
-
-
----
+By following this approach, your Laravel application will leverage the performance benefits of Octane with Swoole---
 
 Buy Me a Coffee
 
