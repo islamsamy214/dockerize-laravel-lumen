@@ -62,7 +62,9 @@ Build and start your Docker containers:
 docker-compose up --build
 ```
 
-By following this approach, your Laravel application will leverage the performance benefits of Octane with Swoole---
+By following this approach, your Laravel application will leverage the performance benefits of Octane with Swoole
+
+---
 
 Buy Me a Coffee
 
