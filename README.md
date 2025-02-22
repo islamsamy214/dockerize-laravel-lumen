@@ -40,7 +40,7 @@ Nginx will act as the proxy server, handling all incoming requests and forwardin
 
 Steps to Implement
 
-1. Install Octane in Your Lumen Application
+1. Install Octane in Your Laravel Application
 
 Run the following commands:
 
