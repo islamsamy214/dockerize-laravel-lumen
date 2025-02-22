@@ -31,11 +31,6 @@ Use Octane with Swoole for improved performance:
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=swoole --host=0.0.0.0 --port=80"
 ```
 
-3. Set Up Nginx as a Reverse Proxy
-
-Nginx will act as the proxy server, handling all incoming requests and forwarding them to Octane. This setup ensures you get maximum performance from Octane with Swoole.
-
-
 ---
 
 Steps to Implement
