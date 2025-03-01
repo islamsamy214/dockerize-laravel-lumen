@@ -1,6 +1,6 @@
-# Laravel Lumen in Docker  
+# Laravel in Docker  
 
-**Dockerize PHP Laravel or Lumen projects with the common extensions**  
+**Dockerize PHP Laravel projects with the common extensions**  
 
 ## Introduction  
 This is an edited clone of Sail but with PHP 8.3 version.  
